@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      #ReprodPrincipal{
+        text-align: center;
+        width: 720;
+      }
+
+      #ReprodSecundarios{
+        text-align: left;
+        width: 350;
+      }
+
+      #ReprodSecundarios2{
+        text-align: left;
+        width: 350;
+      }
+    </style>
+  </head>
+  <body>
+
+    <script>
+    function escuchar(){
+        var x = document.getElementById("ReprodPrincipal");
+        x.muted = false;
+    }
+
+    function silenciar(){
+        var x = document.getElementById("ReprodPrincipal");
+        x.muted = true;
+    }
+
+    function escuchar2(){
+        var x = document.getElementById("ReprodSecundarios");
+        x.muted = false;
+    }
+
+    function silenciar2(){
+        var x = document.getElementById("ReprodSecundarios");
+        x.muted = true;
+    }
+    </script>
+
+    <video id="ReprodPrincipal" autoplay loop controls muted>
+      <source id="mp4_src" src="futbol.mp4" type="video/mp4">
+      <source id="ogg_src" src="futbol.ogg" type="video/ogg">
+      Your browser does not support HTML5 video.
+    </video>
+
+    <br><br>
+
+    <!-- VIDEO 1 -->
+
+    <script>
+      function CambioVideo()  {
+          var retomar = 0.0;
+          var x = document.getElementById("ReprodSecundarios");
+          var z = document.getElementById("ReprodPrincipal");
+          document.getElementById("mp4_src").src = "baloncesto.mp4";
+          document.getElementById("ogg_src").src = "baloncesto.ogg";
+          document.getElementById("ReprodPrincipal").load();
+          retomar = x.currentTime;
+          z.currentTime = retomar;
+      }
+    </script>
+
+    <button onclick="CambioVideo()" onmouseover="escuchar2()" onmouseout="silenciar2()">
+      <video id="ReprodSecundarios" autoplay loop muted>
+        <source id="mp4_src" src="baloncesto.mp4" type="video/mp4">
+        <source id="ogg_src" src="baloncesto.ogg" type="video/ogg">
+        Your browser does not support HTML5 video.
+      </video>
+
+    </button>
+
+    <br></br>
+
+    <!-- VIDEO 2 -->
+
+    <script>
+      function CambioVideo2()  {
+        var retomar = 0.0;
+        var x = document.getElementById("ReprodSecundarios2");
+        var z = document.getElementById("ReprodPrincipal");
+        document.getElementById("mp4_src").src = "futbol.mp4";
+        document.getElementById("ogg_src").src = "futbol.ogg";
+        document.getElementById("ReprodPrincipal").load();
+        retomar = x.currentTime;
+        z.currentTime = retomar;
+      }
+    </script>
+
+    <button onclick="CambioVideo2()" onmouseover="escuchar()" onmouseout="silenciar()">
+      <video id="ReprodSecundarios2" autoplay loop muted>
+        <source id="mp4_src" src="futbol.mp4" type="video/mp4">
+        <source id="ogg_src" src="futbol.ogg" type="video/ogg">
+        Your browser does not support HTML5 video.
+      </video>
+    </button>
+
+  </body>
+</html>

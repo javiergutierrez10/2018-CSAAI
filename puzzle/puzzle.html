@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  table, th, td {
+    border: 0px solid white;
+  }
+</style>
+</head>
+<body background="fondo.jpg" onload="main()" style="margin-top:30px">
+<div align="center">
+  <img id="c0" onclick="cambiar_imagen(this)" src="imagen1/imagen1.jpg" height="150px" width="200px"></th>
+  <img id="c1" onclick="cambiar_imagen(this)" src="imagen2/imagen2.jpg" height="150px" width="200px"></th>
+  <img id="c2" onclick="cambiar_imagen(this)" src="imagen3/imagen3.jpg" height="150px" width="200px"></th>
+<div/>
+<table align="center" style="margin-top:30px">
+  <tr>
+    <th>
+      <img id="0" onclick="movimiento(this)" src="blanco.jpg" height="200px" width="250px"></th>
+    <th >
+      <img id="1" onclick="movimiento(this)" src="blanco.jpg" height="200px" width="250px"></th>
+    <th  >
+      <img id="2" onclick="movimiento(this)" src="blanco.jpg" height="200px" width="250px"></th>
+  </tr>
+  <tr>
+    <th >
+      <img id="3" onclick="movimiento(this)" src="blanco.jpg" height="200px" width="250px"></th>
+    <th >
+      <img id="4" onclick="movimiento(this)" src="blanco.jpg" height="200px" width="250px"></th>
+    <th >
+      <img id="5" onclick="movimiento(this)" src="blanco.jpg" height="200px" width="250px"></th>
+  </tr>
+  <tr>
+    <th >
+      <img id="6" onclick="movimiento(this)" src="blanco.jpg" height="200px" width="250px"></th>
+    <th >
+      <img id="7" onclick="movimiento(this)" src="blanco.jpg" height="200px" width="250px"></th>
+    <th >
+      <img id="8"  onclick="movimiento(this)" src="blanco.jpg" height="200px" width="250px"></th>
+    </th>
+  </tr>
+</table>
+</body>
+<div align="center">
+  <P  id="time" style="font-size:30px; font-type:Verdana; color: white"></P>
+<div/>
+
+<script>
+
+    var puzzle = [];
+    var cronometro;
+
+    function cambiar_imagen(elemt){
+      var src_pieza = elemt.getAttribute("src");
+      imagen_elegida = src_pieza.split("/");
+      clearInterval(cronometro);
+      tiempo();
+      iniciar_puzzle(imagen_elegida [0]);
+    }
+
+    function iniciar_puzzle(imagen_elegida){
+      document.getElementById("8").src = "blanco.jpg"
+      var n_piezas = ["0","1","2","3","4","5","6","7"];
+      n_piezas = n_piezas.sort(function() {return Math.random() - 0.5});
+      for (var i=0; i<n_piezas.length; i++) {
+        document.getElementById(i + "").src = imagen_elegida +"/" + n_piezas[i] + ".jpg";
+      }
+    }
+
+    function estado_puzzle(){
+      for(var i=0; i<9;i++){
+        var elemento = document.getElementById(i + "")
+        puzzle[i] = elemento.getAttribute("src");
+      }
+    }
+
+    function actualiza_puzzle(p){
+      for(var i=0; i<9;i++){ document.getElementById(i + "").src = puzzle[i];}
+    }
+
+    function movimiento(elemt) {
+      estado_puzzle();
+      var src_pieza = elemt.getAttribute("src");
+      var pos_pieza = puzzle.indexOf(src_pieza);
+      var pos_blanca = puzzle.indexOf("blanco.jpg");
+      if(src_pieza  !== "blanco.jpg"){
+        if(
+          ((puzzle[pos_pieza-1] == "blanco.jpg") && (pos_pieza!=3) && (pos_pieza!=6)) ||
+          (puzzle[pos_pieza-3] == "blanco.jpg")  ||
+          ((puzzle[pos_pieza+1] == "blanco.jpg") && (pos_pieza!=2) && (pos_pieza!=5)) ||
+          (puzzle[pos_pieza+3] == "blanco.jpg")
+        ){
+            puzzle[pos_blanca] = src_pieza;
+            puzzle[pos_pieza] = "blanco.jpg"
+        }else{ alert("No se puede realizar este movimiento.");
+        }
+      }
+      actualiza_puzzle(puzzle);
+    }
+
+    function tiempo()
+    {
+      var contador_s =0; var contador_m =0;
+      cronometro = setInterval(
+        function(){
+          if(contador_s==60)
+          {
+            contador_s=0; contador_m++;
+            if(contador_m==59){ contador_m=0;}
+          }
+          contador_s++;
+          var min = contador_m;
+          var seg = contador_s;
+          document.getElementById("time").innerHTML = "Contador: " + min + " min " + seg + " seg";
+        }
+        ,1000);
+    }
+
+    function main(){
+      iniciar_puzzle("imagen2");
+      tiempo();
+    }
+
+</script>
+</html>
